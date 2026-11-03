@@ -1,0 +1,214 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>明朝那些事儿 · 九册通览（1368—1644）</title>
+<meta name="description" content="《明朝那些事儿》全书九册的结构化通览：十六帝年表、读法路线图（含 56 章必读原文）、皇帝谱、人物谱、战役节点与全量数据表，条目均可回溯到原书页码。">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="#top">
+    <span class="seal">明</span>
+    <span class="brand-txt">明朝那些事儿 通览<em>1368 — 1644 · 九册</em></span>
+  </a>
+  <nav class="topnav" id="topnav">
+    <a href="#timeline">年表</a><a href="#reading">内容</a>
+    <a href="#emperors">皇帝</a><a href="#figures">人物</a>
+    <a href="#wars">节点</a>
+  </nav>
+  <span class="hint" id="topHint">当年明月 · 十六帝 · 二百七十六年</span>
+</header>
+
+<main id="top">
+
+  <!-- ================= 页首 ================= -->
+  <section class="hero">
+    <p class="eyebrow">Ming Dynasty · A Structured Reading of Nine Volumes</p>
+    <h1>明朝那些事儿 · 九册通览
+      <span>十六位皇帝 · 十七个年号 · 二百七十六年 · 二百余条大事记</span>
+    </h1>
+    <div class="hero-stats">
+      <div class="hstat"><b id="stVol">9</b><small>册</small><u>图文增补版</u></div>
+      <div class="hstat"><b id="stEmp">16</b><small>位皇帝</small><u>17 个年号</u></div>
+      <div class="hstat"><b id="stSpan">276</b><small>年跨度</small><u>1368.1 — 1644.3</u></div>
+      <div class="hstat"><b id="stEvent">210</b><small>条大事记</small><u>原书附录逐条录入</u></div>
+      <div class="hstat"><b id="stFig">78</b><small>位人物</small><u>按全书提及次数排序</u></div>
+      <div class="hstat"><b id="stChar">170万</b><small>字 / 3107 页</small><u>PDF 全文解析</u></div>
+    </div>
+  </section>
+
+  <!-- ================= 01 帝系年表 ================= -->
+  <section class="panel" id="timeline">
+    <h2><span class="idx">01</span>帝系年表 · 十六行 × 二百九十三年</h2>
+    <p class="sub sub-nowrap">
+      一行一位皇帝，横轴为年份（<b>1352—1644</b>）。<b>浅色长条</b>是该帝的在位区间（起止精确到月），条上标出<b>年号</b>；
+      条上的<b>彩色小刻</b>是本年表收纳的大事，颜色即类别（战 / 政 / 制 / 外 / 文 / 灾）。
+      最上一行灰带是<b>元末</b>：1368 年之前明尚未建立，所以不参与归年，只放建国前的三场决战。
+      图顶的<b>九条色带</b>是九册书各自覆盖的年份，底部是<b>原书附录大事记的年份密度</b>——
+      它说明这本书的叙事重心压在哪里。<br>点击任意一行或任意一年，右侧即显示该年详情。
+    </p>
+    <div class="toolbar">
+      <span class="field"><span>缩放</span>
+        <button class="btn sm" data-zoom="out">−</button>
+        <span id="zoomVal" style="width:74px;text-align:center;font-variant-numeric:tabular-nums;white-space:nowrap">7.2 px/年</span>
+        <button class="btn sm" data-zoom="in">+</button>
+        <button class="btn sm" data-zoom="fit">适配</button>
+      </span>
+      <span class="field" style="margin-left:auto"><span>跳到年份</span>
+        <input type="range" id="yearRange" min="1352" max="1644" value="1449" style="width:220px">
+        <b id="yearNow" style="color:var(--red);width:52px;display:inline-block;text-align:right;font-variant-numeric:tabular-nums">1449</b>
+      </span>
+    </div>
+
+    <div class="split">
+      <div class="col">
+        <div class="card">
+          <div class="card-h"><b>帝系 × 年号 × 大事</b><span>横轴 1368—1644</span>
+            <span class="right"><span style="font-size:11px;color:var(--muted-2)">按住拖动平移 · Shift+滚轮横移 · 「适配」看全图</span></span>
+          </div>
+          <div class="note-bar" id="noteBar"></div>
+          <div class="chart-flex"><div class="chart-labels" id="chartLabels"></div><div class="chart-stage" id="chartStage"><div id="chart"></div></div></div>
+          <div class="legend-row" style="padding:4px 12px 9px;margin-top:0" id="chartLegend"></div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <div class="card-h"><b id="detailTitle">年份详情</b>
+            <span class="right" id="detailNav"></span>
+          </div>
+          <input class="dvr" type="radio" name="dvt" id="dvt-year" checked>
+          <input class="dvr" type="radio" name="dvt" id="dvt-emp">
+          <input class="dvr" type="radio" name="dvt" id="dvt-apx">
+          <div class="tabs" id="dvTabs">
+            <label for="dvt-year">年份详情</label>
+            <label for="dvt-emp">十六帝</label>
+            <label for="dvt-apx">大事记</label>
+          </div>
+          <div class="detail" id="detail"></div>
+          <div class="detail pane" id="dvEmp">
+            <div class="tbl-wrap"><table class="dt" id="tblEmp"></table></div>
+          </div>
+          <div class="detail pane" id="dvApx">
+            <div class="toolbar" style="margin:0 0 8px;gap:6px">
+              <input type="search" id="apxSearch" placeholder="检索原文…" style="flex:1 1 100%">
+              <select id="apxEmp" style="flex:1 1 100%"><option value="all">全部皇帝</option></select>
+            </div>
+            <div class="toolbar" style="margin:0 0 8px;gap:5px">
+              <button class="btn sm" id="expEv">大事 CSV</button>
+              <button class="btn sm" id="expEmp">皇帝 CSV</button>
+              <button class="btn sm" id="expFig">人物 CSV</button>
+              <button class="btn sm" id="expJson">JSON</button>
+            </div>
+            <div id="apxCount" style="font-size:11px;color:var(--muted-2);margin:0 0 6px"></div>
+            <div class="tbl-wrap"><table class="dt" id="tblApx"></table></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="pull">
+      读法：<b>归年规则</b>是「某年归属该年行用月数最多的年号所属皇帝，并列取后改元者」。
+      所以 1457 年算英宗（景泰只占正月，此后十一个月是天顺），1620 年算神宗（万历占到七月，泰昌只有五个月）。
+      同朝之内各帝时段<b>首尾相接，不留缝隙、不重叠</b>——这条不变式由脚本逐段校验，
+      1368—1644 的每一年都有且只有一位皇帝。注意「归年」与「在位」是两件事：
+      洪武止于三十一年闰五月，但 1398 年全国行的仍是洪武年号，所以 1398 年记在太祖名下。
+    </p>
+  
+<section class="panel" id="data">
+    </section>
+  </section>
+
+  <!-- ================= 02 读法 ================= -->
+  <section class="panel" id="reading">
+    <h2><span class="idx">02</span>内容 · 检视书籍主线</h2>
+
+    <h3 class="rd-h">① 先立骨架：三条主线 + 四幕</h3>
+    <div class="rd-spine" id="rdSpine"></div>
+    <div class="rd-acts" id="rdActs"></div>
+
+    <h3 class="rd-h">② 分册路线图 · 主读 56 章</h3>
+    <div class="rd-plan" id="rdPlan"></div>
+
+      </section>
+
+  <!-- ================= 03 皇帝谱 ================= -->
+  <section class="panel" id="emperors">
+    <h2><span class="idx">03</span>皇帝谱 · 十六位</h2>
+    <p class="sub">
+      每位一张卡：庙号／姓名／年号、精确起止（年月）、在位时长（横条按真实月数等比，最长者满格）、
+      结局与葬地，以及作者在书里给这个人下的断语。点击卡片可在年表里定位。
+    </p>
+    <div class="toolbar">
+      <span class="field" id="empTierGroup"></span>
+      <span class="field">在位时长排序</span>
+      <button class="btn sm on" data-empsort="time">按即位顺序</button>
+      <button class="btn sm" data-empsort="dur">在位最长优先</button>
+      <button class="btn sm" data-empsort="short">在位最短优先</button>
+      <span class="field" style="margin-left:auto" id="empStat"></span>
+    </div>
+    <div class="tier-note" id="empTierNote"></div>
+    <div class="emp-grid" id="empGrid"></div>
+  </section>
+
+  <!-- ================= 04 人物谱 ================= -->
+  <section class="panel" id="figures">
+    <h2><span class="idx">04</span>人物谱 · 七十八位</h2>
+    <p class="sub">
+      影响力＝<b>制度 · 军事 · 思想 · 象征 · 网络</b>五维各 0–5 分（合计 ×4 折百分），<b>不计提及次数</b>；已按 T1/T2/T3 分级，可按官职、关系、分级筛选。
+      有意思的不是排名本身，而是<b>重心在移位</b>：越往后，占据篇幅最多的越不是皇帝，而是首辅、太监、言官与边将。
+    </p>
+    <div class="toolbar">
+      <span class="field"><input type="search" id="figSearch" placeholder="搜姓名 / 身份 / 事略" style="width:220px"></span>
+      <span class="field">按册
+        <select id="figVol"><option value="all">全部</option></select>
+      </span>
+      <span class="field">官职
+        <select id="figRank"><option value="all">全部</option></select>
+      </span>
+      <span class="field">与皇帝
+        <select id="figRel"><option value="all">全部</option></select>
+      </span>
+      <span class="field" id="figTierGroup"></span>
+      <span class="field">排序
+        <select id="figSort">
+          <option value="score">影响力分</option>
+          <option value="freq">提及次数</option>
+          <option value="rank">按官职</option>
+        </select>
+      </span>
+      <span class="field" style="margin-left:auto">显示 <b id="figCount" style="color:var(--red)">78</b> 位</span>
+    </div>
+
+    <div class="dims-legend" id="figDimLegend"></div>
+    <div class="fig-grid" id="figGrid"></div>
+  </section>
+
+  <!-- ================= 05 战役与事变 ================= -->
+  <section class="panel" id="wars">
+    <h2><span class="idx">05</span>战役 · 政变 · 制度节点</h2>
+    <p class="sub">
+      年表上那些彩色小刻的完整清单：<b>六十二个节点</b>，每条一句为什么重要，末尾标出所属册次。
+      按类别筛选，或按时间顺序通读——它就是这本书的骨节。
+    </p>
+    <div class="toolbar" id="warFilter">
+      <button class="btn sm on" data-cat="all">全部 62</button>
+    </div>
+    <div class="tier-note" id="warTierNote"></div>
+    <div class="war-grid" id="warGrid"></div>
+  </section>
+
+  <footer>
+    《明朝那些事儿》九册通览 ｜ 数据源：用户提供 PDF 全文（3107 页）解析 ｜ 十六帝 · 十七年号 · 二百七十六年
+    <br>原书：当年明月《明朝那些事儿》图文增补版（全九册，北京联合出版公司 2012 年版，毛佩琦审订） ｜ 页码均指该 PDF 页序<br>归年规则：某年归属该年执政月数最多的皇帝，并列取后即位者 ｜ 时间精度：月 ｜ 全站条目可回溯到原书页码
+    <br><b>1368 — 1644，二百七十六年，十六位皇帝，九个册子</b>
+  </footer>
+</main>
+
+<div class="sel-card" id="selCard"></div>
+
+<script src="assets/data.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
